@@ -28,8 +28,10 @@ def test_saves_output():
 
     tmpfile = Path(gettempdir()) / f"test_saves_output_{uuid4()}"
     try:
-        file_handling.save_data(tmpfile, output_data, shallow=False)
-        assert filecmp.cmp(tmpfile, OUTPUT_DATA_PATH), "Output files do not match"
+        file_handling.save_data(tmpfile, output_data)
+        assert filecmp.cmp(
+            tmpfile, OUTPUT_DATA_PATH, shallow=False
+        ), "Output files do not match"
     finally:
         os.unlink(tmpfile)
 
