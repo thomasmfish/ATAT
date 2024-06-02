@@ -1,3 +1,6 @@
+def test_displays_version(): ...
+
+
 def test_help(): ...
 
 

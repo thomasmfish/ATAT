@@ -1,39 +1,29 @@
+from __future__ import annotations
+
 from pandas.testing import assert_frame_equal
 import filecmp
 
-import os
-from pathlib import Path
-from uuid import uuid4
-import pandas as pd
-from tempfile import gettempdir
+from typing import TYPE_CHECKING
 
 from atat import file_handling
 
-from .utils import get_input_data_path, get_output_data_path
-
-INPUT_DATA_PATH = get_input_data_path()
-OUTPUT_DATA_PATH = get_output_data_path()
-
-
-def test_reads_input():
-    input_data = file_handling.read_input(INPUT_DATA_PATH)
-
-    expected_input_data = pd.read_csv(INPUT_DATA_PATH)
-
-    assert_frame_equal(input_data, expected_input_data)
+if TYPE_CHECKING:
+    from pathlib import Path
+    from pandas import DataFrame
 
 
-def test_saves_output():
-    output_data = pd.read_csv(OUTPUT_DATA_PATH)
+def test_reads_input(input_data_path: Path, input_dataframe: DataFrame) -> None:
+    assert_frame_equal(file_handling.read_input(input_data_path), input_dataframe)
 
-    tmpfile = Path(gettempdir()) / f"test_saves_output_{uuid4()}"
-    try:
-        file_handling.save_data(tmpfile, output_data)
-        assert filecmp.cmp(
-            tmpfile, OUTPUT_DATA_PATH, shallow=False
-        ), "Output files do not match"
-    finally:
-        os.unlink(tmpfile)
+
+def test_saves_output(
+    output_dataframe: DataFrame, output_data_path: Path, tmp_path
+) -> None:
+    tmp_output_path = tmp_path / "output_data.csv"
+    file_handling.save_data(tmp_output_path, output_dataframe)
+    assert filecmp.cmp(
+        tmp_output_path, output_data_path, shallow=False
+    ), "Output files do not match"
 
 
 def test_writes_decimal_places(): ...
