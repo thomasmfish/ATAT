@@ -74,14 +74,23 @@ def test_set_decimal_places(argstring) -> None:
     ), f"args are: {returned_kwargs}"
 
 
+@pytest.mark.parametrize("image_type", SUPPORTED_IMAGE_STRINGS)
 @pytest.mark.parametrize(
     "argstring",
     ["--image-type", "-im"],
     ids=["long argname", "short argname"],
 )
-def test_set_image_type(argstring) -> None:
+def test_set_image_type(argstring, image_type) -> None:
     input_value = "an/input/path/to/file.ext"
-    image_type = SUPPORTED_IMAGE_STRINGS[-1]
     args = ["--input", input_value, argstring, image_type]
     returned_kwargs = parse_args_function(*args)
     assert returned_kwargs.image_type == image_type, f"args are: {returned_kwargs}"
+
+
+def test_set_image_type_default() -> None:
+    input_value = "an/input/path/to/file.ext"
+    args = ["--input", input_value]
+    returned_kwargs = parse_args_function(*args)
+    assert (
+        returned_kwargs.image_type == SUPPORTED_IMAGE_STRINGS[0]
+    ), f"args are: {returned_kwargs}"
