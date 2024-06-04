@@ -6,6 +6,7 @@ dependencies = [
     "sphinx>=7.3.7",
     "numpy>=1.26.4",
     "pandas>=2.2.2",
+    "matplotlib>=3.9.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.8"
@@ -39,4 +40,9 @@ disallow_untyped_defs = true
 exclude = [
     "tests",
     "source",
+]
+
+[tool.pytest.ini_options]
+testpaths = [
+    "tests",
 ]
