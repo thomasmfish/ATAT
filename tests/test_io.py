@@ -24,6 +24,3 @@ def test_saves_output(
     assert filecmp.cmp(
         tmp_output_path, output_data_path, shallow=False
     ), "Output files do not match"
-
-
-def test_writes_decimal_places(): ...
