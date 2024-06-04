@@ -19,26 +19,44 @@ charset-normalizer==3.3.2
     # via requests
 colorama==0.4.6
     # via sphinx
+contourpy==1.2.1
+    # via matplotlib
+cycler==0.12.1
+    # via matplotlib
 docutils==0.21.2
     # via sphinx
+fonttools==4.53.0
+    # via matplotlib
 idna==3.7
     # via requests
 imagesize==1.4.1
     # via sphinx
 jinja2==3.1.4
     # via sphinx
+kiwisolver==1.4.5
+    # via matplotlib
 markupsafe==2.1.5
     # via jinja2
+matplotlib==3.9.0
+    # via atat
 numpy==1.26.4
     # via atat
+    # via contourpy
+    # via matplotlib
     # via pandas
 packaging==24.0
+    # via matplotlib
     # via sphinx
 pandas==2.2.2
     # via atat
+pillow==10.3.0
+    # via matplotlib
 pygments==2.18.0
     # via sphinx
+pyparsing==3.1.2
+    # via matplotlib
 python-dateutil==2.9.0.post0
+    # via matplotlib
     # via pandas
 pytz==2024.1
     # via pandas
