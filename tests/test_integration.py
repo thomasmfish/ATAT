@@ -33,16 +33,14 @@ def test_create_optical_density_plot(
 
 
 def test_run(input_dataframe, output_data_path, output_plot_path, tmp_path) -> None:
-    tmp_output_data_path = tmp_path / "output_data.csv"
-    tmp_output_plot_path = tmp_path / "output_plot.png"
+    output_name = "output"
+    tmp_output_data_path = tmp_path / f"{output_name}.csv"
+    tmp_output_plot_path = tmp_path / f"{output_name}.png"
 
     atat.run(
         input_dataframe,
         tmp_path,
-        tmp_output_data_path.stem,
-        tmp_output_plot_path.stem,
-        decimal_places=1,
-        image_type="png",
+        output_name,
     )
 
     assert tmp_output_data_path.is_file()
