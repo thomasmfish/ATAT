@@ -35,7 +35,7 @@ def test_accepts_input(argstring) -> None:
     ids=["long argname", "short argname"],
 )
 def test_set_output_directory(
-    argstring: Literal["--output-directory"] | Literal["-o"],
+    argstring,
 ) -> None:
     input_value = "an/input/path/to/file.ext"
     output_directory = "an/output/path/"
