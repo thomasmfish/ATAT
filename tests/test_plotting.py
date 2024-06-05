@@ -10,9 +10,6 @@ if TYPE_CHECKING:
     from pandas import DataFrame
 
 
-@pytest.mark.skip(
-    reason="Plotting is not 100%% consistent on different systems, so manual checking is required"
-)
 def test_create_optical_density_boxplot(input_dataframe: DataFrame) -> None:
     figure = plotting.create_optical_density_boxplot(input_dataframe)
 
@@ -27,9 +24,6 @@ def test_create_optical_density_boxplot(input_dataframe: DataFrame) -> None:
         assert axis.has_data(), f"Axis {i} has no data set"
 
 
-@pytest.mark.skip(
-    reason="Plotting is not 100%% consistent on different systems, so manual checking is required"
-)
 def test_create_histograms(input_dataframe: DataFrame) -> None:
     figure = plotting.create_histograms(input_dataframe)
 

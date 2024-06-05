@@ -21,6 +21,9 @@ def test_create_statistical_output(
     assert filecmp.cmp(tmp_output, output_data_path)
 
 
+@pytest.mark.skip(
+    reason=r"Plotting is not 100% consistent on different systems, so manual checking is required"
+)
 def test_create_optical_density_histograms_plot(
     input_data_path: pd.DataFrame, output_histograms_path: Path, tmp_path
 ) -> None:
@@ -34,6 +37,9 @@ def test_create_optical_density_histograms_plot(
     assert filecmp.cmp(tmp_output, output_histograms_path, shallow=False)
 
 
+@pytest.mark.skip(
+    reason=r"Plotting is not 100% consistent on different systems, so manual checking is required"
+)
 def test_create_optical_density_boxplot_plot(
     input_data_path: pd.DataFrame, output_boxplot_path: Path, tmp_path
 ) -> None:
