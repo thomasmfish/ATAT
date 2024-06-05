@@ -2,7 +2,7 @@ from __future__ import annotations
 import filecmp
 from typing import TYPE_CHECKING
 
-import atat
+from atat.main import run
 
 if TYPE_CHECKING:
     import pandas as pd
@@ -10,47 +10,38 @@ if TYPE_CHECKING:
 
 
 def test_create_statistical_output(
-    input_dataframe: pd.DataFrame, output_data_path: Path, tmp_path
+    input_data_path: pd.DataFrame, output_data_path: Path, tmp_path
 ) -> None:
-    tmp_output = tmp_path / "output_data.csv"
-    atat.create_statistical_output(tmp_output, input_dataframe)
+    output_name = "output"
+    tmp_output = tmp_path / f"{output_name}.csv"
+    run(input_data_path, output_directory=tmp_path, output_name=output_name)
 
     assert tmp_output.is_file()
 
     assert filecmp.cmp(tmp_output, output_data_path)
 
 
-def test_create_optical_density_plot(
-    input_dataframe: pd.DataFrame, output_plot_path: Path, tmp_path
+def test_create_optical_density_histograms_plot(
+    input_data_path: pd.DataFrame, output_histograms_path: Path, tmp_path
 ) -> None:
-    tmp_output = tmp_path / "output_plot.png"
+    output_name = "output"
+    tmp_output = tmp_path / output_histograms_path.name
 
-    atat.create_optical_density_plot(tmp_output, input_dataframe)
+    run(input_data_path, output_directory=tmp_path, output_name=output_name)
 
     assert tmp_output.is_file()
 
-    assert filecmp.cmp(tmp_output, output_plot_path, shallow=False)
+    assert filecmp.cmp(tmp_output, output_histograms_path, shallow=False)
 
 
-def test_run(input_dataframe, output_data_path, output_plot_path, tmp_path) -> None:
+def test_create_optical_density_boxplot_plot(
+    input_data_path: pd.DataFrame, output_boxplot_path: Path, tmp_path
+) -> None:
     output_name = "output"
-    tmp_output_data_path = tmp_path / f"{output_name}.csv"
-    tmp_output_plot_path = tmp_path / f"{output_name}.png"
+    tmp_output = tmp_path / output_boxplot_path.name
 
-    atat.run(
-        input_dataframe,
-        tmp_path,
-        output_name,
-    )
+    run(input_data_path, output_directory=tmp_path, output_name=output_name)
 
-    assert tmp_output_data_path.is_file()
+    assert tmp_output.is_file()
 
-    assert tmp_output_plot_path.is_file()
-
-    assert filecmp.cmp(
-        tmp_output_data_path, output_data_path, shallow=False
-    ), "Output files do not match"
-
-    assert filecmp.cmp(
-        tmp_output_plot_path, output_plot_path, shallow=False
-    ), "Output files do not match"
+    assert filecmp.cmp(tmp_output, output_boxplot_path, shallow=False)
