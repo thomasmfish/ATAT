@@ -18,3 +18,13 @@ CLI tool for plotting and returning statistics from antibody data.
 
 * A histogram of optical densities with clear annotations as a PNG file.
 * a csv with the following statistics: min, max and mean optical density for amino acid groups to an accuracy of 1 decimal place.
+
+### How To:
+
+This would be distributed via PyPI and/or conda-forge and would be installable that way.
+
+Once installed, the tool can be accessed via, the command line using the following arguments:
+
+`atat -i INPUT_FILE [-o OUTPUT_DIRECTORY] [-n OUTPUT_NAME] [-dp DECIMAL_PLACES] [-im {PNG,JPEG,TIFF}]`
+
+Arguments in square brackets are optional.
