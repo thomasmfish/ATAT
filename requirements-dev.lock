@@ -48,6 +48,7 @@ markupsafe==2.1.5
     # via jinja2
 matplotlib==3.9.0
     # via atat
+    # via seaborn
 mypy==1.10.0
 mypy-extensions==1.0.0
     # via black
@@ -58,6 +59,7 @@ numpy==1.26.4
     # via matplotlib
     # via pandas
     # via pandas-stubs
+    # via seaborn
 packaging==24.0
     # via black
     # via matplotlib
@@ -65,6 +67,7 @@ packaging==24.0
     # via sphinx
 pandas==2.2.2
     # via atat
+    # via seaborn
 pandas-stubs==2.2.2.240514
 pathspec==0.12.1
     # via black
@@ -88,6 +91,8 @@ pytz==2024.1
     # via pandas
 requests==2.32.3
     # via sphinx
+seaborn==0.13.2
+    # via atat
 six==1.16.0
     # via python-dateutil
 snowballstemmer==2.2.0

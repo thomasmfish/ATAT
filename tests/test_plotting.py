@@ -24,7 +24,6 @@ def test_create_optical_density_boxplot(
 
     for i, axis in enumerate(axes):
         assert axis.has_data(), f"Axis {i} has no data set"
-    figure.savefig(output_data_path.with_suffix(".png"))
 
 
 def test_create_histograms(input_dataframe: DataFrame, output_data_path) -> None:
@@ -39,4 +38,3 @@ def test_create_histograms(input_dataframe: DataFrame, output_data_path) -> None
 
     for i, axis in enumerate(axes):
         assert axis.has_data(), f"Axis {i} has no data set"
-    figure.savefig(output_data_path.with_suffix(".png"))

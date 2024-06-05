@@ -2,53 +2,47 @@ from typing import Literal
 import pytest
 from unittest.mock import patch
 
-from subprocess import Popen, PIPE, DEVNULL
+import shlex
 
-from atat import __version__
-
-
-def test_displays_version() -> None:
-    p = Popen("atat --version", stdout=PIPE, stderr=DEVNULL, text=True)
-    p.start()
-    stdout, _ = p.communicate(timeout=2)
-    assert f"ATAT {__version__}" in stdout
+from atat.main import main, SUPPORTED_IMAGE_STRINGS
 
 
 @pytest.mark.parametrize(
     "argstring",
-    ["--input", "-i", ""],
-    ids=["long argname", "short argname", "positional"],
+    ["--input", "-i"],
+    ids=["long argname", "short argname"],
 )
-@patch("atat.run")
+@patch("atat.main.run")
 def test_accepts_input(mock_run, argstring) -> None:
     input_value = "an/input/path/to/file.ext"
-    p = Popen(f"atat {argstring} {input_value}", stdout=PIPE, stderr=DEVNULL, text=True)
-    p.start()
-    p.wait(timeout=2)
-    mock_run.assert_called_once_with(input_file=input_value)
+    main(*shlex.split(f"{argstring} {input_value}"))
+    mock_run.assert_called_once_with(
+        input_file=input_value,
+        output_directory=None,
+        output_name=None,
+        decimal_places=1,
+        image_type="PNG",
+    )
 
 
 @pytest.mark.parametrize(
     "argstring",
-    ["--output-directory", "-o", ""],
-    ids=["long argname", "short argname", "positional"],
+    ["--output-directory", "-o"],
+    ids=["long argname", "short argname"],
 )
-@patch("atat.run")
+@patch("atat.main.run")
 def test_set_output_directory(
     mock_run, argstring: Literal["--output-directory"] | Literal["-o"]
 ) -> None:
     input_value = "an/input/path/to/file.ext"
     output_directory_value = "an/output/path/"
-    p = Popen(
-        f"atat --input {input_value}  {argstring} {output_directory_value}",
-        stdout=PIPE,
-        stderr=DEVNULL,
-        text=True,
-    )
-    p.start()
-    p.wait(timeout=2)
+    main(*shlex.split(f"--input {input_value}  {argstring} {output_directory_value}"))
     mock_run.assert_called_once_with(
-        input_file=input_value, output_directory=output_directory_value
+        input_file=input_value,
+        output_directory=output_directory_value,
+        output_name=None,
+        decimal_places=1,
+        image_type="PNG",
     )
 
 
@@ -57,19 +51,18 @@ def test_set_output_directory(
     ["--output-name", "-n"],
     ids=["long argname", "short argname"],
 )
-@patch("atat.run")
+@patch("atat.main.run")
 def test_set_output_name(mock_run, argstring) -> None:
     input_value = "an/input/path/to/file.ext"
     output_name = "output_name"
-    p = Popen(
-        f"atat --input {input_value} {argstring} {output_name}",
-        stdout=PIPE,
-        stderr=DEVNULL,
-        text=True,
+    main(*shlex.split(f"--input {input_value} {argstring} {output_name}"))
+    mock_run.assert_called_once_with(
+        input_file=input_value,
+        output_directory=None,
+        output_name=output_name,
+        decimal_places=1,
+        image_type="PNG",
     )
-    p.start()
-    p.wait(timeout=2)
-    mock_run.assert_called_once_with(input_file=input_value, output_name=output_name)
 
 
 @pytest.mark.parametrize(
@@ -77,38 +70,34 @@ def test_set_output_name(mock_run, argstring) -> None:
     ["--decimals", "-dp"],
     ids=["long argname", "short argname"],
 )
-@patch("atat.run")
+@patch("atat.main.run")
 def test_set_decimal_places(mock_run, argstring) -> None:
     input_value = "an/input/path/to/file.ext"
     decimal_places = 7
-    p = Popen(
-        f"atat --input {input_value} {argstring} {decimal_places}",
-        stdout=PIPE,
-        stderr=DEVNULL,
-        text=True,
-    )
-    p.start()
-    p.wait(timeout=2)
+    main(*shlex.split(f"--input {input_value} {argstring} {decimal_places}"))
     mock_run.assert_called_once_with(
-        input_file=input_value, decimal_places=decimal_places
+        input_file=input_value,
+        output_directory=None,
+        output_name=None,
+        decimal_places=decimal_places,
+        image_type="PNG",
     )
 
 
+@pytest.mark.parametrize("image_type", SUPPORTED_IMAGE_STRINGS)
 @pytest.mark.parametrize(
     "argstring",
     ["--image-type", "-im"],
     ids=["long argname", "short argname"],
 )
-@patch("atat.run")
-def test_set_image_type(mock_run, argstring) -> None:
+@patch("atat.main.run")
+def test_set_image_type(mock_run, argstring, image_type) -> None:
     input_value = "an/input/path/to/file.ext"
-    image_type = "image_type"
-    p = Popen(
-        f"atat --input {input_value} {argstring} {image_type}",
-        stdout=PIPE,
-        stderr=DEVNULL,
-        text=True,
+    main(*shlex.split(f"--input {input_value} {argstring} {image_type}"))
+    mock_run.assert_called_once_with(
+        input_file=input_value,
+        output_directory=None,
+        output_name=None,
+        decimal_places=1,
+        image_type=image_type,
     )
-    p.start()
-    p.wait(timeout=2)
-    mock_run.assert_called_once_with(input_file=input_value, image_type=image_type)

@@ -8,7 +8,12 @@ from tempfile import gettempdir, TemporaryDirectory
 import pandas as pd
 from typing import TYPE_CHECKING
 
-from .utils import get_input_data_path, get_output_data_path, get_output_plot_path
+from .utils import (
+    get_input_data_path,
+    get_output_data_path,
+    get_output_histograms_path,
+    get_output_boxplot_path,
+)
 
 if TYPE_CHECKING:
     from collections.abc import Generator
@@ -25,8 +30,13 @@ def output_data_path() -> Path:
 
 
 @pytest.fixture(scope="session")
-def output_plot_path() -> Path:
-    return get_output_plot_path()
+def output_histograms_path() -> Path:
+    return get_output_histograms_path()
+
+
+@pytest.fixture(scope="session")
+def output_boxplot_path() -> Path:
+    return get_output_boxplot_path()
 
 
 @pytest.fixture(scope="function")
