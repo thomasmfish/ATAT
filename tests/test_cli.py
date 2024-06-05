@@ -1,4 +1,3 @@
-from typing import Literal
 import pytest
 from unittest.mock import patch
 
