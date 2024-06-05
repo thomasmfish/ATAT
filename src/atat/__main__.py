@@ -1,6 +1,6 @@
 import sys
 
-from .main import main
+from .main import main as main_function
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main_function(sys.argv[1:])
