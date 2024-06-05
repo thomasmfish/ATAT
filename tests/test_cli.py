@@ -31,9 +31,7 @@ def test_accepts_input(mock_run, argstring) -> None:
     ids=["long argname", "short argname"],
 )
 @patch("atat.main.run")
-def test_set_output_directory(
-    mock_run, argstring: Literal["--output-directory"] | Literal["-o"]
-) -> None:
+def test_set_output_directory(mock_run, argstring) -> None:
     input_value = "an/input/path/to/file.ext"
     output_directory_value = "an/output/path/"
     main(*shlex.split(f"--input {input_value}  {argstring} {output_directory_value}"))
