@@ -11,7 +11,7 @@ from typing import TYPE_CHECKING
 from .utils import (
     get_input_data_path,
     get_output_data_path,
-    get_output_histogram_path,
+    get_output_histograms_path,
     get_output_boxplot_path,
 )
 
@@ -31,7 +31,7 @@ def output_data_path() -> Path:
 
 @pytest.fixture(scope="session")
 def output_histogram_path() -> Path:
-    return get_output_histogram_path()
+    return get_output_histograms_path()
 
 
 @pytest.fixture(scope="session")
