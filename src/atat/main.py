@@ -56,7 +56,7 @@ def run(
 
 
 def main(*args) -> None:
-    parsed = parse_args(*args)
+    parsed = parse_args(*args, supported_image_types=SUPPORTED_IMAGE_STRINGS)
     run(
         input_file=parsed.input_file,
         output_directory=parsed.output_directory,
