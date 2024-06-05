@@ -3,7 +3,6 @@ name = "atat"
 version = "0.1.0"
 description = "CLI tool for plotting and returning statistics from antibody data."
 dependencies = [
-    "sphinx>=7.3.7",
     "numpy>=1.26.4",
     "pandas>=2.2.2",
     "matplotlib>=3.9.0",

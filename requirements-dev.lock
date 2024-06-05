@@ -98,7 +98,6 @@ six==1.16.0
 snowballstemmer==2.2.0
     # via sphinx
 sphinx==7.3.7
-    # via atat
 sphinxcontrib-applehelp==1.0.8
     # via sphinx
 sphinxcontrib-devhelp==1.0.6
