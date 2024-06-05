@@ -50,7 +50,8 @@ def grouped_frame_test_data_to_dataframe(
 def test_analyse_statistics(
     input_dataframe: pd.DataFrame, output_dataframe: pd.DataFrame
 ) -> None:
-    assert_frame_equal(stats.analyse_statistics(input_dataframe), output_dataframe)
+    analysed_dataframe = stats.analyse_statistics(input_dataframe)
+    assert_frame_equal(analysed_dataframe, output_dataframe)
 
 
 @pytest.mark.parametrize(
@@ -130,7 +131,7 @@ def test_get_statistics_from_grouped_dataframe(
 
     columns = ["optical_density", "amino_acid_sequence"]
     expected_columns = [
-        "amino_acid_sequence",
+        columns[1],
         *(f"{stat}_{columns[0]}" for stat in statistics),
     ]
 
@@ -142,20 +143,19 @@ def test_get_statistics_from_grouped_dataframe(
     stats_dataframe = stats.get_statistics_from_grouped_dataframe(
         input_grouped_dataframe, statistics
     )
+    stats_dataframe.sort_values(by=columns[1])
 
-    series_list = []
+    series_dict = {}
     for aa_sequence, densities in grouped_frame_test_data.items():
-        series_list.append(
-            pd.Series(
-                [
-                    aa_sequence,
-                    *(
-                        stat_name_to_numpy_function[stat](densities)
-                        for stat in statistics
-                    ),
-                ],
-                index=expected_columns,
-            )
+        series_dict[aa_sequence] = pd.Series(
+            [
+                aa_sequence,
+                *(stat_name_to_numpy_function[stat](densities) for stat in statistics),
+            ],
+            index=expected_columns,
         )
-    for (_, series), expected_series in zip(stats_dataframe.iterrows(), series_list):
-        assert_series_equal(series, expected_series)
+
+    for _, series in stats_dataframe.iterrows():
+        assert_series_equal(
+            series, series_dict[series.get(columns[1])], check_names=False
+        )
