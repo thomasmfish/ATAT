@@ -1,5 +1,6 @@
 from __future__ import annotations
 import logging
+from pathlib import Path
 from typing import TYPE_CHECKING, Literal, get_args
 
 from . import file_handling, plotting, stats
@@ -23,12 +24,22 @@ def run(
     decimal_places: int = 1,
     image_type: SupportedImageType = "PNG",
 ) -> None:
+    input_file = Path(input_file)
     if output_directory is None:
         # If no output directory is given, use the input directory as the output
-        output_directory = input_file.parent
         logger.info(
-            "No output directory specified, setting it to: %s", output_directory
+            "No output directory specified, setting it to: %s", input_file.parent
         )
+        output_directory = input_file.parent
+    else:
+        output_directory = Path(output_directory)
+        if not output_directory.is_dir():
+            logger.warning(
+                "Output directory '%s' does not exist, setting it to: %s",
+                output_directory,
+                input_file.parent,
+            )
+            output_directory = input_file.parent
 
     if output_name is None:
         # If no output directory is given, use the input directory as the output
