@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.skip(
-    "Plotting is not 100%% consistent on different systems, so manual checking is required"
+    reason="Plotting is not 100%% consistent on different systems, so manual checking is required"
 )
 def test_create_optical_density_boxplot(input_dataframe: DataFrame) -> None:
     figure = plotting.create_optical_density_boxplot(input_dataframe)
@@ -28,7 +28,7 @@ def test_create_optical_density_boxplot(input_dataframe: DataFrame) -> None:
 
 
 @pytest.mark.skip(
-    "Plotting is not 100%% consistent on different systems, so manual checking is required"
+    reason="Plotting is not 100%% consistent on different systems, so manual checking is required"
 )
 def test_create_histograms(input_dataframe: DataFrame) -> None:
     figure = plotting.create_histograms(input_dataframe)
