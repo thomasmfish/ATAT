@@ -17,7 +17,6 @@ from .utils import create_dataframe_with_duplicate
 
 if TYPE_CHECKING:
     from collections.abc import Collection
-    import pandas as pd
     from numpy.typing import NDArray
 
 GroupedFrameTestData = namedtuple("GroupedFrameTestData", ["dataframe", "dict"])
