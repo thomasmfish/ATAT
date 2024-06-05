@@ -30,7 +30,7 @@ def output_data_path() -> Path:
 
 
 @pytest.fixture(scope="session")
-def output_histogram_path() -> Path:
+def output_histograms_path() -> Path:
     return get_output_histograms_path()
 
 
